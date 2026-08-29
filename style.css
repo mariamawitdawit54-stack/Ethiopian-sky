@@ -1,0 +1,838 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Ethiopic:wght@400;500;600;700&display=swap');
+
+
+:root {
+    --ink: #111318;
+    --night: #111b2e;
+    --night-deep: #080d18;
+
+    --parchment: #eee4cf;
+    --paper: #f5eddd;
+
+    --gold: #c99a3d;
+    --red: #a33b32;
+    --green: #41684c;
+    --blue: #243f68;
+
+    --line: rgba(201, 154, 61, 0.45);
+    --soft-line: rgba(238, 228, 207, 0.16);
+
+    --max-width: 1180px;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    background: var(--night-deep);
+    color: var(--parchment);
+    font-family: "Inter", sans-serif;
+    line-height: 1.6;
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* =========================
+   MANUSCRIPT ORNAMENT
+========================= */
+
+.ornament-top {
+    height: 9px;
+    display: flex;
+    background: var(--gold);
+}
+
+.ornament-top span {
+    flex: 1;
+    border-right: 2px solid var(--ink);
+}
+
+.ornament-top span:nth-child(2) {
+    background: var(--red);
+}
+
+.ornament-top span:nth-child(3) {
+    background: var(--green);
+}
+
+.ornament-top span:nth-child(4) {
+    background: var(--blue);
+}
+
+.ornament-top span:nth-child(5) {
+    background: var(--gold);
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.site-header {
+    max-width: var(--max-width);
+    margin: auto;
+    padding: 25px 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid var(--soft-line);
+}
+
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+
+.brand-symbol {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid var(--gold);
+    color: var(--gold);
+
+    transform: rotate(45deg);
+}
+
+
+.brand-symbol::first-letter {
+    transform: rotate(-45deg);
+}
+
+
+.brand h1 {
+    font-size: 14px;
+    letter-spacing: 0.18em;
+}
+
+
+.brand p {
+    color: var(--gold);
+    font-family: "Noto Sans Ethiopic", sans-serif;
+    font-size: 12px;
+}
+
+
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+
+nav a {
+    color: #bfc5d0;
+    font-size: 13px;
+    transition: 0.25s;
+}
+
+
+nav a:hover,
+nav a.active {
+    color: var(--gold);
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 700px;
+    max-width: var(--max-width);
+
+    margin: auto;
+    padding: 80px 28px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+
+.hero::before,
+.hero::after {
+    content: "";
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    border: 1px solid var(--soft-line);
+    transform: rotate(45deg);
+}
+
+
+.hero::before {
+    left: -250px;
+    top: 150px;
+}
+
+
+.hero::after {
+    right: -250px;
+    bottom: 50px;
+}
+
+
+.hero-content {
+    max-width: 700px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+
+.eyebrow {
+    color: var(--gold);
+    letter-spacing: 0.22em;
+    font-size: 11px;
+    margin-bottom: 25px;
+}
+
+
+.hero h2 {
+    font-size: clamp(70px, 11vw, 150px);
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+    font-weight: 700;
+}
+
+
+.hero h2 span {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--gold);
+}
+
+
+.hero-geez {
+    margin-top: 32px;
+    color: var(--gold);
+    font-family: "Noto Sans Ethiopic", sans-serif;
+    font-size: 17px;
+}
+
+
+.hero-description {
+    max-width: 520px;
+    margin: 18px auto 0;
+    color: #b8bec9;
+    font-size: 16px;
+}
+
+
+.hero-buttons {
+    margin-top: 35px;
+
+    display: flex;
+    justify-content: center;
+    gap: 13px;
+}
+
+
+.btn {
+    padding: 12px 21px;
+    font-size: 13px;
+    border: 1px solid var(--gold);
+    transition: 0.25s;
+}
+
+
+.btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+}
+
+
+.btn-primary:hover {
+    background: var(--parchment);
+}
+
+
+.btn-secondary:hover {
+    background: rgba(201, 154, 61, 0.1);
+}
+
+
+/* Stars */
+
+.stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+
+.stars span {
+    position: absolute;
+    color: var(--gold);
+    opacity: 0.7;
+}
+
+
+.stars span:nth-child(1) {
+    top: 18%;
+    left: 12%;
+}
+
+
+.stars span:nth-child(2) {
+    top: 30%;
+    right: 15%;
+}
+
+
+.stars span:nth-child(3) {
+    bottom: 20%;
+    left: 18%;
+}
+
+
+.stars span:nth-child(4) {
+    top: 17%;
+    right: 35%;
+}
+
+
+.stars span:nth-child(5) {
+    bottom: 28%;
+    right: 11%;
+}
+
+
+.stars span:nth-child(6) {
+    top: 42%;
+    left: 7%;
+}
+
+
+.stars span:nth-child(7) {
+    bottom: 12%;
+    right: 35%;
+}
+
+
+.stars span:nth-child(8) {
+    top: 12%;
+    left: 48%;
+}
+
+
+/* =========================
+   ASTRONOMICAL DIAL
+========================= */
+
+.astronomical-dial {
+    position: absolute;
+
+    width: 430px;
+    height: 430px;
+
+    border: 1px solid var(--soft-line);
+    border-radius: 50%;
+
+    opacity: 0.45;
+}
+
+
+.dial-ring {
+    position: absolute;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+}
+
+
+.ring-one {
+    inset: 35px;
+}
+
+
+.ring-two {
+    inset: 90px;
+}
+
+
+.ring-three {
+    inset: 145px;
+}
+
+
+.dial-cross {
+    position: absolute;
+    background: var(--soft-line);
+}
+
+
+.horizontal {
+    width: 100%;
+    height: 1px;
+    top: 50%;
+}
+
+
+.vertical {
+    width: 1px;
+    height: 100%;
+    left: 50%;
+}
+
+
+.dial-star {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 25px;
+    color: var(--gold);
+}
+
+
+.dial-mark {
+    position: absolute;
+    color: var(--gold);
+}
+
+
+.mark-one {
+    top: 5%;
+    left: 48%;
+}
+
+
+.mark-two {
+    right: 5%;
+    top: 48%;
+}
+
+
+.mark-three {
+    bottom: 5%;
+    left: 48%;
+}
+
+
+.mark-four {
+    left: 5%;
+    top: 48%;
+}
+
+
+/* =========================
+   GENERAL SECTIONS
+========================= */
+
+.section {
+    max-width: var(--max-width);
+    margin: auto;
+    padding: 100px 28px;
+}
+
+
+.section-label {
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+}
+
+
+.section h3 {
+    max-width: 720px;
+    font-size: clamp(35px, 5vw, 62px);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+}
+
+
+.section h3 span {
+    display: block;
+    color: #858d9b;
+}
+
+
+/* =========================
+   DIVIDER
+========================= */
+
+.manuscript-divider {
+    max-width: var(--max-width);
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    padding: 0 28px;
+}
+
+
+.manuscript-divider span {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+}
+
+
+.manuscript-divider b {
+    color: var(--gold);
+}
+
+
+/* =========================
+   INTRO
+========================= */
+
+.intro-text {
+    max-width: 650px;
+    margin-top: 35px;
+
+    color: #aeb5c0;
+    font-size: 17px;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.exploration-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+
+    background: var(--soft-line);
+}
+
+
+.feature-card {
+    min-height: 310px;
+    padding: 35px;
+
+    background: var(--night);
+
+    position: relative;
+
+    transition: 0.3s;
+}
+
+
+.feature-card:hover {
+    background: #172238;
+}
+
+
+.card-number {
+    color: #596170;
+    font-size: 11px;
+}
+
+
+.card-symbol {
+    color: var(--gold);
+    font-size: 25px;
+    margin-top: 45px;
+}
+
+
+.feature-card h4 {
+    margin-top: 12px;
+    font-size: 25px;
+}
+
+
+.feature-card p {
+    max-width: 400px;
+    margin-top: 12px;
+
+    color: #949daa;
+    font-size: 14px;
+}
+
+
+.feature-card a {
+    display: inline-block;
+    margin-top: 25px;
+
+    color: var(--gold);
+    font-size: 13px;
+}
+
+
+/* =========================
+   JOURNEY
+========================= */
+
+.journey {
+    border-top: 1px solid var(--soft-line);
+}
+
+
+.journey-line {
+    margin-top: 70px;
+
+    display: flex;
+    align-items: center;
+}
+
+
+.journey-item {
+    flex: 1;
+    text-align: center;
+}
+
+
+.journey-dot {
+    width: 48px;
+    height: 48px;
+
+    display: grid;
+    place-items: center;
+
+    margin: auto;
+
+    border: 1px solid var(--gold);
+    color: var(--gold);
+
+    font-size: 13px;
+}
+
+
+.journey-item h4 {
+    margin-top: 18px;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+}
+
+
+.journey-item p {
+    margin: 10px auto 0;
+    max-width: 180px;
+
+    color: #808896;
+    font-size: 12px;
+}
+
+
+.journey-connector {
+    width: 60px;
+    height: 1px;
+    background: var(--line);
+}
+
+
+/* =========================
+   EVIDENCE
+========================= */
+
+.evidence-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 70px;
+
+    border-top: 1px solid var(--soft-line);
+}
+
+
+.evidence-content {
+    max-width: 650px;
+}
+
+
+.evidence-content > p:not(.section-label) {
+    margin-top: 25px;
+    color: #9ca4b0;
+}
+
+
+.text-link {
+    display: inline-block;
+    margin-top: 25px;
+    color: var(--gold);
+}
+
+
+.evidence-mark {
+    width: 220px;
+    height: 220px;
+
+    border: 1px solid var(--line);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+
+    color: var(--gold);
+
+    transform: rotate(45deg);
+}
+
+
+.evidence-mark div,
+.evidence-mark span {
+    transform: rotate(-45deg);
+}
+
+
+/* =========================
+   CLOSING
+========================= */
+
+.closing {
+    text-align: center;
+    border-top: 1px solid var(--soft-line);
+}
+
+
+.closing-ornament {
+    color: var(--gold);
+    letter-spacing: 12px;
+    margin-bottom: 30px;
+}
+
+
+.closing h3 {
+    margin: auto;
+}
+
+
+.closing p {
+    max-width: 550px;
+    margin: 30px auto 0;
+    color: #8d95a2;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 70px 28px;
+
+    text-align: center;
+
+    border-top: 1px solid var(--soft-line);
+}
+
+
+.footer-ornament {
+    color: var(--gold);
+}
+
+
+footer h4 {
+    margin-top: 20px;
+    letter-spacing: 0.18em;
+}
+
+
+footer p {
+    color: var(--gold);
+    font-family: "Noto Sans Ethiopic", sans-serif;
+}
+
+
+footer small {
+    display: block;
+    margin-top: 15px;
+    color: #666e7b;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 800px) {
+
+    .site-header {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .hero {
+        min-height: 620px;
+    }
+
+    .astronomical-dial {
+        width: 320px;
+        height: 320px;
+    }
+
+    .exploration-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .journey-line {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .journey-connector {
+        width: 1px;
+        height: 40px;
+    }
+
+    .evidence-preview {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .evidence-mark {
+        margin: 30px auto;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .hero h2 {
+        font-size: 65px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+}

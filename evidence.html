@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Evidence Lab for Ethiopian Sky — examine astronomical and Ethiopian heritage claims through sources and carefully worded verdicts.">
+  <title>Evidence Lab – Ethiopian Sky</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Page-scoped styles only. Existing site-wide stylesheet remains unchanged. -->
+  <style>
+    .evidence-intro { max-width: 760px; margin: 0 auto; text-align: center; }
+
+    .evidence-method {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .evidence-step {
+      padding: 1.2rem;
+      border: 1px solid rgba(212, 168, 76, 0.35);
+    }
+
+    .evidence-step-number {
+      display: block;
+      margin-bottom: .55rem;
+      font-size: .72rem;
+      letter-spacing: .16em;
+      opacity: .72;
+    }
+
+    .evidence-step h4 { margin-bottom: .4rem; }
+    .evidence-step p { margin: 0; line-height: 1.65; }
+
+    .claim-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .claim-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 1.35rem;
+      border: 1px solid rgba(212, 168, 76, 0.38);
+    }
+
+    .claim-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .55rem;
+      margin-bottom: .85rem;
+    }
+
+    .claim-number {
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      opacity: .7;
+    }
+
+    .verdict {
+      display: inline-block;
+      padding: .3rem .55rem;
+      border: 1px solid currentColor;
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .verdict-supported { color: #d7b867; }
+    .verdict-context { color: #d8b477; }
+    .verdict-uncertain { color: #e0a06a; }
+    .verdict-not-established { color: #d07d6c; }
+
+    .claim-card h4 { margin: 0; line-height: 1.35; }
+    .claim-card > p { margin: .8rem 0 0; line-height: 1.7; }
+
+    .claim-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .65rem;
+      margin-top: auto;
+      padding-top: 1.2rem;
+    }
+
+    .evidence-btn {
+      padding: .62rem .85rem;
+      border: 1px solid rgba(212, 168, 76, 0.58);
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .evidence-btn:hover,
+    .evidence-btn:focus-visible {
+      border-color: rgba(212, 168, 76, 1);
+      outline: none;
+    }
+
+    .source-link {
+      padding: .62rem .1rem;
+      color: inherit;
+      opacity: .8;
+      text-decoration: underline;
+      text-underline-offset: .18em;
+    }
+
+    .claim-image {
+      width: 100%;
+      height: 190px;
+      margin-bottom: 1rem;
+      object-fit: cover;
+      border: 1px solid rgba(212, 168, 76, 0.22);
+    }
+
+    .evidence-scale {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: .8rem;
+      margin-top: 1.5rem;
+    }
+
+    .scale-item {
+      padding: 1rem;
+      border-left: 3px solid currentColor;
+      background: rgba(255, 255, 255, .02);
+    }
+
+    .scale-item strong { display: block; margin-bottom: .3rem; }
+    .scale-item span { font-size: .84rem; line-height: 1.55; opacity: .84; }
+
+    .test-area {
+      max-width: 820px;
+      margin: 2rem auto 0;
+    }
+
+    .test-card {
+      padding: 1.35rem;
+      border: 1px solid rgba(212, 168, 76, 0.42);
+    }
+
+    .test-claim {
+      margin: 0 0 1rem;
+      font-size: 1.12rem;
+      line-height: 1.6;
+    }
+
+    .test-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .7rem;
+    }
+
+    .test-option {
+      padding: .7rem .9rem;
+      border: 1px solid rgba(212, 168, 76, 0.5);
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .test-option:hover,
+    .test-option:focus-visible {
+      border-color: rgba(212, 168, 76, 1);
+      outline: none;
+    }
+
+    .test-result {
+      display: none;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(212, 168, 76, 0.22);
+      line-height: 1.7;
+    }
+
+    .test-result.show { display: block; }
+
+    .limits-box {
+      margin-top: 2rem;
+      padding: 1.3rem;
+      border: 1px solid rgba(212, 168, 76, 0.32);
+    }
+
+    .limits-box p { margin: 0; line-height: 1.75; }
+
+    .sources-note {
+      margin-top: 1.3rem;
+      font-size: .8rem;
+      line-height: 1.6;
+      opacity: .7;
+    }
+
+    .evidence-modal {
+      width: min(780px, calc(100vw - 2rem));
+      max-height: min(86vh, 860px);
+      padding: 0;
+      border: 1px solid rgba(212, 168, 76, 0.68);
+      background: #0b0f1a;
+      color: #f5edd8;
+      box-shadow: 0 28px 75px rgba(0, 0, 0, .65);
+    }
+
+    .evidence-modal::backdrop { background: rgba(0, 0, 0, .74); backdrop-filter: blur(3px); }
+
+    .evidence-modal-inner { max-height: 86vh; overflow: auto; padding: 1.5rem; }
+
+    .modal-close {
+      float: right;
+      width: 2.4rem;
+      height: 2.4rem;
+      border: 1px solid rgba(245, 237, 216, .55);
+      border-radius: 50%;
+      background: transparent;
+      color: inherit;
+      font-size: 1.35rem;
+      cursor: pointer;
+    }
+
+    .modal-close:hover,
+    .modal-close:focus-visible { border-color: rgba(212, 168, 76, 1); outline: none; }
+
+    .modal-kicker {
+      margin: 0 0 .45rem;
+      font-size: .72rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      opacity: .72;
+    }
+
+    .modal-title { margin: 0; padding-right: 3rem; }
+    .modal-block { margin-top: 1.25rem; }
+    .modal-block h4 { margin-bottom: .4rem; }
+    .modal-block p { margin: 0; line-height: 1.75; }
+
+    .modal-fact-list {
+      margin: .8rem 0 0;
+      padding-left: 1.15rem;
+    }
+
+    .modal-fact-list li { margin: .35rem 0; line-height: 1.55; }
+
+    @media (max-width: 900px) {
+      .claim-grid { grid-template-columns: 1fr; }
+      .evidence-scale { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 700px) {
+      .evidence-method { grid-template-columns: 1fr; }
+      .evidence-scale { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Shared header: unchanged site structure, Evidence marked active. -->
+  <header class="site-header">
+    <div class="brand">
+      <div class="brand-symbol">✦</div>
+      <div>
+        <h1>ETHIOPIAN SKY</h1>
+        <p>ኢትዮጵያ ሰማይ</p>
+      </div>
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="explore.html">Explore</a>
+      <a href="heritage.html">Heritage</a>
+      <a href="evidence.html" class="active">Evidence</a>
+      <a href="ai.html">Sky AI</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">ማስረጃ ፤ ምርምር ፤ እውነታ</p>
+        <h2>EVIDENCE <span>LAB</span></h2>
+        <p class="hero-geez">ማስረጃን እንመርምር ፣ ጥያቄዎችን እንለይ።</p>
+        <p class="hero-description">
+          Ethiopian sky heritage contains well-documented traditions, modern achievements,
+          and claims that need more careful interpretation. This lab separates what a source
+          establishes from what it does not.
+        </p>
+      </div>
+    </section>
+
+    <!-- Method -->
+    <section class="section" aria-labelledby="method-title">
+      <p class="section-label">01 · HOW IT WORKS</p>
+      <div class="evidence-intro">
+        <h3 id="method-title">Claim → Evidence → Verdict</h3>
+        <p>
+          A strong historical or scientific statement needs more than a compelling story.
+          We first identify the claim, then examine the source, then state a verdict that matches
+          the strength of the evidence.
+        </p>
+      </div>
+
+      <div class="evidence-method">
+        <div class="evidence-step">
+          <span class="evidence-step-number">STEP 01</span>
+          <h4>CLAIM</h4>
+          <p>What exactly is being said?</p>
+        </div>
+        <div class="evidence-step">
+          <span class="evidence-step-number">STEP 02</span>
+          <h4>EVIDENCE</h4>
+          <p>What do manuscripts, research, archaeology, astronomy, or official institutions actually establish?</p>
+        </div>
+        <div class="evidence-step">
+          <span class="evidence-step-number">STEP 03</span>
+          <h4>VERDICT</h4>
+          <p>Use the narrowest conclusion that the available evidence supports.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main claims -->
+    <section class="section" aria-labelledby="claims-title">
+      <p class="section-label">02 · CLAIMS UNDER REVIEW</p>
+      <div class="evidence-intro">
+        <h3 id="claims-title">What Do the Sources Actually Show?</h3>
+        <p>
+          Select a claim to read the reasoning behind its verdict. The wording is intentionally
+          cautious where the historical record is incomplete or interpretations remain debated.
+        </p>
+      </div>
+
+      <div class="claim-grid">
+
+        <article class="claim-card feature-card">
+          <div class="claim-meta">
+            <span class="claim-number">Claim 01</span>
+            <span class="verdict verdict-supported">Supported</span>
+          </div>
+          <h4>“Ethiopic sources preserve names for the five classical planets.”</h4>
+          <p>
+            Historical Ethiopic material records names corresponding to Mercury, Venus, Mars,
+            Jupiter, and Saturn. These are the five traditional names used on the Explore page:
+            <strong>አጣርድ, ዝሁራ, መሪህ, መሽተሪ, ዙሐል.</strong>
+          </p>
+          <div class="claim-actions">
+            <button class="evidence-btn" type="button" data-open="claim-01">View evidence</button>
+          </div>
+        </article>
+
+        <article class="claim-card feature-card">
+          <div class="claim-meta">
+            <span class="claim-number">Claim 02</span>
+            <span class="verdict verdict-supported">Supported</span>
+          </div>
+          <h4>“Borana sky knowledge uses stars and the Moon for timekeeping.”</h4>
+          <p>
+            Published research describes a Borana lunar-stellar calendar in southern Ethiopia in
+            which celestial observations help establish months and seasonal timing.
+          </p>
+          <div class="claim-actions">
+            <button class="evidence-btn" type="button" data-open="claim-02">View evidence</button>
+          </div>
+        </article>
+
+        <article class="claim-card feature-card">
+          <div class="claim-meta">
+            <span class="claim-number">Claim 03</span>
+            <span class="verdict verdict-supported">Supported</span>
+          </div>
+          <h4>“Ethiopian manuscript traditions preserve calendrical and astronomical knowledge.”</h4>
+          <p>
+            Ge'ez intellectual traditions include calendrical computation and astronomical material,
+            showing sustained scholarly engagement with timekeeping and the sky.
+          </p>
+          <div class="claim-actions">
+            <button class="evidence-btn" type="button" data-open="claim-03">View evidence</button>
+          </div>
+        </article>
+
+        <article class="claim-card feature-card">
+          <div class="claim-meta">
+            <span class="claim-number">Claim 04</span>
+            <span class="verdict verdict-context">Needs context</span>
+          </div>
+          <h4>“Axumite monuments have astronomical alignments.”</h4>
+          <p>
+            Archaeoastronomical research reports possible or significant alignments at Axumite sites,
+            but the purpose of individual structures should not be presented more confidently than the evidence allows.
+          </p>
+          <div class="claim-actions">
+            <button class="evidence-btn" type="button" data-open="claim-04">View evidence</button>
+          </div>
+        </article>
+
+        <article class="claim-card feature-card">
+          <div class="claim-meta">
+            <span class="claim-number">Claim 05</span>
+            <span class="verdict verdict-uncertain">Not established</span>
+          </div>
+          <h4>“Ethiopia independently invented astronomy.”</h4>
+          <p>
+            Ethiopia has a substantial and distinctive astronomical heritage, but the available evidence
+            does not establish a simple claim of independent invention of astronomy itself.
+          </p>
+          <div class="claim-actions">
+            <button class="evidence-btn" type="button" data-open="claim-05">View evidence</button>
+          </div>
+        </article>
+
+        <article class="claim-card feature-card">
+          <div class="claim-meta">
+            <span class="claim-number">Claim 06</span>
+            <span class="verdict verdict-supported">Supported</span>
+          </div>
+          <h4>“Modern international astronomy includes official Ethiopian names.”</h4>
+          <p>
+            In the IAU NameExoWorlds campaign, Ethiopia received officially approved names for an
+            exoplanet system: the star HD 16175 became <strong>Buna</strong> and its planet HD 16175 b became <strong>Abol</strong>.
+          </p>
+          <div class="claim-actions">
+            <button class="evidence-btn" type="button" data-open="claim-06">View evidence</button>
+          </div>
+        </article>
+
+        <article class="claim-card feature-card">
+          <div class="claim-meta">
+            <span class="claim-number">Claim 07</span>
+            <span class="verdict verdict-supported">Supported</span>
+          </div>
+          <h4>“Ethiopia has active modern astronomy and space-science infrastructure.”</h4>
+          <p>
+            SSGI's current facilities information documents optical telescopes, astronomical instrumentation,
+            satellite operations infrastructure, and an ongoing high-altitude site test at Lalibela.
+          </p>
+          <div class="claim-actions">
+            <button class="evidence-btn" type="button" data-open="claim-07">View evidence</button>
+          </div>
+        </article>
+
+        <article class="claim-card feature-card">
+          <div class="claim-meta">
+            <span class="claim-number">Claim 08</span>
+            <span class="verdict verdict-not-established">Not included</span>
+          </div>
+          <h4>Claims about ancient Ethiopian “discovery” of famous Greco-Roman constellations.</h4>
+          <p>
+            This project does not present unsupported constellation-discovery stories as established history.
+            They are intentionally outside this Evidence Lab because a responsible explorer should not amplify a claim merely because it is repeated online.
+          </p>
+          <div class="claim-actions">
+            <button class="evidence-btn" type="button" data-open="claim-08">Why excluded</button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Evidence scale -->
+    <section class="section" aria-labelledby="scale-title">
+      <p class="section-label">03 · EVIDENCE SCALE</p>
+      <div class="evidence-intro">
+        <h3 id="scale-title">How We Label Claims</h3>
+        <p>These labels describe the strength and limits of the evidence—not whether a story is interesting.</p>
+      </div>
+
+      <div class="evidence-scale">
+        <div class="scale-item verdict-supported">
+          <strong>SUPPORTED</strong>
+          <span>Reliable sources directly support the claim as written.</span>
+        </div>
+        <div class="scale-item verdict-context">
+          <strong>NEEDS CONTEXT</strong>
+          <span>There is evidence, but the interpretation or wording needs qualification.</span>
+        </div>
+        <div class="scale-item verdict-uncertain">
+          <strong>UNCERTAIN</strong>
+          <span>The claim exists, but available evidence is insufficient to establish it confidently.</span>
+        </div>
+        <div class="scale-item verdict-not-established">
+          <strong>NOT ESTABLISHED</strong>
+          <span>The evidence available here does not justify the claim as stated.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Test yourself -->
+    <section class="section" aria-labelledby="test-title">
+      <p class="section-label">04 · TEST YOURSELF</p>
+      <div class="evidence-intro">
+        <h3 id="test-title">What’s Your Verdict?</h3>
+        <p>Try one evidence question before opening the explanation.</p>
+      </div>
+
+      <div class="test-area">
+        <div class="test-card">
+          <p class="test-claim">
+            “The five traditional planetary names shown on Ethiopian Sky are documented in Ethiopic historical material.”
+          </p>
+
+          <div class="test-options" role="group" aria-label="Choose a verdict">
+            <button class="test-option" type="button" data-answer="supported">Supported</button>
+            <button class="test-option" type="button" data-answer="uncertain">Uncertain</button>
+            <button class="test-option" type="button" data-answer="not-supported">Not supported</button>
+          </div>
+
+          <div class="test-result" id="test-result" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What evidence cannot tell us -->
+    <section class="section" aria-labelledby="limits-title">
+      <p class="section-label">05 · LIMITS OF THE RECORD</p>
+      <div class="evidence-intro">
+        <h3 id="limits-title">What Evidence Cannot Automatically Tell Us</h3>
+      </div>
+
+      <div class="limits-box">
+        <p>
+          A source can establish that a name or astronomical practice was recorded. It does not automatically
+          establish who first discovered a planet, whether a tradition developed independently from every other culture,
+          or whether a modern interpretation exactly matches an ancient observer's original intention. Where the record
+          stops, this site stops too—and leaves deeper historical questions for further research and Sky AI.
+        </p>
+      </div>
+
+      <p class="sources-note">
+        Core references used for this page include the International Astronomical Union's NameExoWorlds material,
+        SSGI's current facilities and astro-tourism information, and published research on Ethiopian astronomy and the
+        Borana lunar-stellar calendar. Full source links are listed inside each evidence panel.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- Evidence modals -->
+  <dialog class="evidence-modal" id="claim-01" aria-labelledby="claim-01-title">
+    <div class="evidence-modal-inner">
+      <button class="modal-close" type="button" data-close aria-label="Close evidence">×</button>
+      <p class="modal-kicker">Claim 01 · Supported</p>
+      <h3 class="modal-title" id="claim-01-title">Traditional planetary names in Ethiopic sources</h3>
+      <div class="modal-block">
+        <h4>What the evidence shows</h4>
+        <p>
+          An academic edition of the Ethiopic Chronicle of John of Nikiu discusses the five classical planets
+          and preserves Ethiopic forms corresponding to the names used on this site: Mercury <strong>አጣርድ</strong>,
+          Venus <strong>ዝሁራ</strong>, Mars <strong>መሪህ</strong>, Jupiter <strong>መሽተሪ</strong>, and Saturn <strong>ዙሐል</strong>.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>What this does not prove</h4>
+        <p>
+          It documents a tradition of naming the five classical planets. It does not, by itself, prove that Ethiopia
+          independently discovered the planets or invented planetary astronomy.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>Sources</h4>
+        <ul class="modal-fact-list">
+          <li>Ioannes Nikius, <em>Chronicle of John of Nikiu</em>, academic translation/edition discussing the planetary names.</li>
+          <li>For the five names as displayed on this site, see the associated scholarly Ethiopian planetary-nomenclature research used by the project.</li>
+        </ul>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="evidence-modal" id="claim-02" aria-labelledby="claim-02-title">
+    <div class="evidence-modal-inner">
+      <button class="modal-close" type="button" data-close aria-label="Close evidence">×</button>
+      <p class="modal-kicker">Claim 02 · Supported</p>
+      <h3 class="modal-title" id="claim-02-title">Borana lunar-stellar calendar</h3>
+      <div class="modal-block">
+        <h4>What the evidence shows</h4>
+        <p>
+          Research describes the Borana calendar of southern Ethiopia and northern Kenya as a lunar-stellar system.
+          Traditional calendar keepers observe the Moon and selected stars to organize months and seasonal time.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>Why it matters</h4>
+        <p>
+          This is a strong example of astronomical knowledge as a living cultural practice rather than only a historical artifact.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>Source</h4>
+        <ul class="modal-fact-list">
+          <li>Dinsa et al., <em>Indigenous knowledge of astronomical star positions and temporal patterns for seasonal weather forecasting: the case of Borana Oromo pastoralists of Southern Ethiopia</em> (F1000Research).</li>
+          <li>Current and recent research also describes the Borana system as a lunar-stellar calendar anchored by observed celestial relationships.</li>
+        </ul>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="evidence-modal" id="claim-03" aria-labelledby="claim-03-title">
+    <div class="evidence-modal-inner">
+      <button class="modal-close" type="button" data-close aria-label="Close evidence">×</button>
+      <p class="modal-kicker">Claim 03 · Supported</p>
+      <h3 class="modal-title" id="claim-03-title">Ge'ez manuscript and calendrical traditions</h3>
+      <div class="modal-block">
+        <h4>What the evidence shows</h4>
+        <p>
+          Ethiopian intellectual traditions contain calendrical computation, timekeeping, and astronomical material in Ge'ez-language manuscripts.
+          The tradition includes works connected with calendar calculation and religious timekeeping.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>What we keep separate</h4>
+        <p>
+          A manuscript tradition is evidence of recorded knowledge and practice. It is not a license to claim that every astronomical idea
+          originated independently in Ethiopia.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>Source</h4>
+        <ul class="modal-fact-list">
+          <li>Scholarly work on Ethiopian astronomy, Ge'ez computus, calendars, and manuscript traditions.</li>
+          <li>The Heritage page on this site carries the broader manuscript and calendrical context.</li>
+        </ul>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="evidence-modal" id="claim-04" aria-labelledby="claim-04-title">
+    <div class="evidence-modal-inner">
+      <button class="modal-close" type="button" data-close aria-label="Close evidence">×</button>
+      <p class="modal-kicker">Claim 04 · Needs context</p>
+      <h3 class="modal-title" id="claim-04-title">Astronomical alignments at Axumite sites</h3>
+      <div class="modal-block">
+        <h4>What the evidence shows</h4>
+        <p>
+          Published archaeoastronomical research reports alignments between some Axumite monuments and solar events such as solstices or equinoxes,
+          based on astronomical/planetarium analysis.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>Why the wording matters</h4>
+        <p>
+          An alignment can be evidence of orientation. Explaining exactly why a structure was oriented that way is a further historical interpretation.
+          This page therefore avoids turning an alignment into an absolute statement about the builders' intentions without additional evidence.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>Source</h4>
+        <ul class="modal-fact-list">
+          <li>Goshu &amp; Ridwan, “Ancient Ethiopian Astronomy: Cultural Foundations, Indigenous Timekeeping, and Scientific Contributions,” Lakhomi Journal (2024).</li>
+        </ul>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="evidence-modal" id="claim-05" aria-labelledby="claim-05-title">
+    <div class="evidence-modal-inner">
+      <button class="modal-close" type="button" data-close aria-label="Close evidence">×</button>
+      <p class="modal-kicker">Claim 05 · Not established</p>
+      <h3 class="modal-title" id="claim-05-title">“Ethiopia independently invented astronomy”</h3>
+      <div class="modal-block">
+        <h4>Why we do not present this as fact</h4>
+        <p>
+          Ethiopia has rich astronomical traditions, but “invented astronomy independently” is a much larger claim than the evidence about any one
+          manuscript, monument, or calendar can establish. Astronomy developed across multiple connected ancient cultures, and the historical record is incomplete.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>Our verdict</h4>
+        <p>
+          The safer conclusion is that Ethiopia has important, documented astronomical heritage. The stronger claim of independent invention is not established here.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>Source</h4>
+        <ul class="modal-fact-list">
+          <li>Comparative historical treatment in published Ethiopian-astronomy research.</li>
+          <li>See the Heritage and Evidence pages together for the distinction between documented heritage and unsupported origin claims.</li>
+        </ul>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="evidence-modal" id="claim-06" aria-labelledby="claim-06-title">
+    <div class="evidence-modal-inner">
+      <button class="modal-close" type="button" data-close aria-label="Close evidence">×</button>
+      <p class="modal-kicker">Claim 06 · Supported</p>
+      <h3 class="modal-title" id="claim-06-title">Buna and Abol: official modern Ethiopian names</h3>
+      <div class="modal-block">
+        <h4>What the evidence shows</h4>
+        <p>
+          In the IAU NameExoWorlds campaign, Ethiopia's approved names for the HD 16175 system were <strong>Buna</strong> for the star HD 16175 and
+          <strong>Abol</strong> for the exoplanet HD 16175 b. The IAU's Ethiopia page lists the national campaign and approved naming work.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>Why this belongs here</h4>
+        <p>
+          These are modern, internationally recognized astronomical names connected to Ethiopian culture. They provide a documented bridge between Ethiopia's
+          older sky traditions and its place in contemporary international astronomy.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>Source</h4>
+        <ul class="modal-fact-list">
+          <li><a href="https://nameexoworlds.iau.org/ethiopia" target="_blank" rel="noopener noreferrer">International Astronomical Union — Ethiopia / NameExoWorlds</a></li>
+        </ul>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="evidence-modal" id="claim-07" aria-labelledby="claim-07-title">
+    <div class="evidence-modal-inner">
+      <button class="modal-close" type="button" data-close aria-label="Close evidence">×</button>
+      <p class="modal-kicker">Claim 07 · Supported</p>
+      <h3 class="modal-title" id="claim-07-title">Modern Ethiopian astronomy and space infrastructure</h3>
+      <div class="modal-block">
+        <h4>What the evidence shows</h4>
+        <p>
+          SSGI's current facilities page documents two one-meter optical telescopes, astronomical spectrographs, CCD cameras, an all-sky camera,
+          weather instrumentation, and a satellite operation/control center at Entoto. It also states that a site test is underway at Lalibela at about
+          4,200 metres above sea level for possible additional optical telescopes.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>Observing connection</h4>
+        <p>
+          SSGI also operates astro-tourism services at Entoto Observatory and Research Center, where visitors can take part in guided astronomical observations.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>Sources</h4>
+        <ul class="modal-fact-list">
+          <li><a href="https://ssgi.gov.et/facilities/" target="_blank" rel="noopener noreferrer">SSGI — Facilities</a></li>
+          <li><a href="https://ssgi.gov.et/astro-tourism-services/" target="_blank" rel="noopener noreferrer">SSGI — Astro-Tourism Services</a></li>
+        </ul>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="evidence-modal" id="claim-08" aria-labelledby="claim-08-title">
+    <div class="evidence-modal-inner">
+      <button class="modal-close" type="button" data-close aria-label="Close evidence">×</button>
+      <p class="modal-kicker">Project policy · Excluded</p>
+      <h3 class="modal-title" id="claim-08-title">Why unsupported constellation-discovery claims are excluded</h3>
+      <div class="modal-block">
+        <h4>Our standard</h4>
+        <p>
+          A famous story, a mythological connection, or a modern retelling is not enough to establish an ancient astronomical discovery claim.
+          Because this website separates evidence from legend, unsupported constellation-discovery stories are not presented as historical facts.
+        </p>
+      </div>
+      <div class="modal-block">
+        <h4>Project decision</h4>
+        <p>
+          The Explore page therefore concentrates on objects and traditions that can be discussed responsibly, while deeper or unresolved historical questions
+          are reserved for Sky AI and the research-oriented pages.
+        </p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Shared footer -->
+  <footer>
+    <div class="footer-ornament">─── ✦ ───</div>
+    <h4>ETHIOPIAN SKY</h4>
+    <p>ኢትዮጵያ ሰማይ</p>
+    <small>A science and culture exploration project.</small>
+  </footer>
+
+  <!-- Shared site JS -->
+  <script src="main.js"></script>
+
+  <!-- Inline page-specific behavior only. -->
+  <script>
+    (function () {
+      "use strict";
+
+      const openButtons = document.querySelectorAll("[data-open]");
+      const dialogs = document.querySelectorAll(".evidence-modal");
+      const answerButtons = document.querySelectorAll("[data-answer]");
+      const testResult = document.getElementById("test-result");
+
+      function openDialog(dialog) {
+        if (!dialog) return;
+        if (typeof dialog.showModal === "function") {
+          dialog.showModal();
+        } else {
+          dialog.setAttribute("open", "");
+        }
+
+        const closeButton = dialog.querySelector("[data-close]");
+        if (closeButton) requestAnimationFrame(() => closeButton.focus());
+      }
+
+      function closeDialog(dialog) {
+        if (!dialog) return;
+        if (typeof dialog.close === "function" && dialog.open) {
+          dialog.close();
+        } else {
+          dialog.removeAttribute("open");
+        }
+      }
+
+      openButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const dialog = document.getElementById(button.getAttribute("data-open"));
+          openDialog(dialog);
+        });
+      });
+
+      dialogs.forEach((dialog) => {
+        const closeButton = dialog.querySelector("[data-close]");
+
+        if (closeButton) {
+          closeButton.addEventListener("click", () => closeDialog(dialog));
+        }
+
+        dialog.addEventListener("click", (event) => {
+          if (event.target === dialog) closeDialog(dialog);
+        });
+      });
+
+      answerButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const answer = button.getAttribute("data-answer");
+
+          if (answer === "supported") {
+            testResult.innerHTML = "<strong>Correct — Supported.</strong><br>The five names shown on Ethiopian Sky are treated here as documented traditional planetary names. That establishes the existence of the recorded names; it does not establish a claim of independent invention of astronomy.";
+          } else {
+            testResult.innerHTML = "<strong>Not quite.</strong><br>The evidence used by this project supports the statement as written: the five names are documented in Ethiopic historical material. The important limit is that this does not prove independent discovery or invention.";
+          }
+
+          testResult.classList.add("show");
+        });
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        const openDialogEl = document.querySelector(".evidence-modal[open]");
+        if (openDialogEl) closeDialog(openDialogEl);
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore the eight planets, selected night-sky objects, and observing from Ethiopia.">
+  <title>Explore – Ethiopian Sky</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Page-only styles. The site's shared stylesheet remains unchanged. -->
+  <style>
+    .explore-lead{max-width:760px;margin:0 auto 2.2rem;text-align:center}
+    .explore-lead p{line-height:1.75}
+    .explore-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem;margin-top:1.75rem}
+    .explore-card{display:block;width:100%;padding:0;overflow:hidden;text-align:left;color:inherit;background:transparent;border:1px solid rgba(212,168,76,.42);border-radius:4px;cursor:pointer;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+    .explore-card:hover,.explore-card:focus-visible{transform:translateY(-4px);border-color:rgba(212,168,76,.92);box-shadow:0 12px 30px rgba(0,0,0,.28);outline:none}
+    .explore-card img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:#080b13}
+    .explore-card-body{display:block;padding:1rem}
+    .explore-card-meta{display:block;margin-bottom:.35rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.72}
+    .explore-card h4{margin:0;line-height:1.25}
+    .explore-card-name{display:block;margin-top:.3rem;font-size:1.04rem}
+    .explore-card-desc{display:block;margin-top:.55rem;font-size:.88rem;line-height:1.55;opacity:.84}
+    .explore-card-cta{display:inline-block;margin-top:.8rem;font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;opacity:.78}
+
+    .sky-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .sky-grid .explore-card img{aspect-ratio:16/10}
+
+    .observe-panel{max-width:900px;margin:2rem auto 0;padding:1.2rem 1.3rem;border:1px solid rgba(212,168,76,.35)}
+    .observe-panel p{line-height:1.75;margin-bottom:.65rem}
+    .observe-panel p:last-child{margin-bottom:0}
+
+    .modal{width:min(900px,calc(100vw - 2rem));max-height:88vh;padding:0;border:1px solid rgba(212,168,76,.65);background:#0a0f19;color:#f5edd8;box-shadow:0 28px 80px rgba(0,0,0,.62)}
+    .modal::backdrop{background:rgba(0,0,0,.74);backdrop-filter:blur(3px)}
+    .modal-inner{max-height:88vh;overflow:auto}
+    .modal-visual{position:relative}
+    .modal-visual img{display:block;width:100%;max-height:360px;object-fit:cover;background:#080b13}
+    .modal-close{position:absolute;top:.75rem;right:.75rem;width:2.5rem;height:2.5rem;padding:0;border:1px solid rgba(245,237,216,.62);border-radius:50%;background:rgba(5,7,12,.78);color:#f5edd8;font-size:1.45rem;line-height:1;cursor:pointer}
+    .modal-close:hover,.modal-close:focus-visible{border-color:rgba(212,168,76,.95);outline:none}
+    .modal-content{padding:1.5rem}
+    .modal-label{margin:0 0 .45rem;font-size:.73rem;letter-spacing:.15em;text-transform:uppercase;opacity:.75}
+    .modal-content h3{margin:0}
+    .modal-name{margin:.32rem 0 0;font-size:1.18rem}
+    .modal-summary{margin:1rem 0 0;line-height:1.75}
+    .modal-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem;margin-top:1.3rem}
+    .modal-fact{padding:.85rem .95rem;border:1px solid rgba(212,168,76,.25);background:rgba(255,255,255,.02)}
+    .modal-fact strong{display:block;margin-bottom:.25rem;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;opacity:.76}
+    .modal-section{margin-top:1.25rem}
+    .modal-section h4{margin-bottom:.42rem}
+    .modal-section p{margin:0;line-height:1.75}
+    .modal-source{margin-top:1.15rem;font-size:.77rem;line-height:1.6;opacity:.64}
+
+    .heritage-note{max-width:800px;margin:1.75rem auto 0;text-align:center;font-size:.8rem;line-height:1.65;opacity:.7}
+
+    @media (max-width:1000px){.explore-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sky-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:650px){.explore-grid,.sky-grid{grid-template-columns:1fr}.modal{width:min(96vw,900px)}.modal-content{padding:1.1rem}.modal-facts{grid-template-columns:1fr}}
+    @media (prefers-reduced-motion:reduce){.explore-card{transition:none}}
+  </style>
+</head>
+
+<body>
+
+  <!-- Shared header: intentionally matches Home / Heritage. -->
+  <header class="site-header">
+    <div class="brand">
+      <div class="brand-symbol">✦</div>
+      <div>
+        <h1>ETHIOPIAN SKY</h1>
+        <p>ኢትዮጵያ ሰማይ</p>
+      </div>
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="explore.html" class="active">Explore</a>
+      <a href="heritage.html">Heritage</a>
+      <a href="evidence.html">Evidence</a>
+      <a href="ai.html">Sky AI</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">የሰማይ ዓለም</p>
+        <h2>EXPLORE THE <span>SKY</span></h2>
+        <p class="hero-geez">ፕላኔቶችን ፣ ከዋክብትን እና የሩቅ ሰማይን ይመርምሩ።</p>
+        <p class="hero-description">
+          Explore the eight planets, then look beyond the Solar System at objects that can be seen from Ethiopian skies.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="planets-title">
+      <p class="section-label">01 · SOLAR SYSTEM</p>
+      <div class="explore-lead">
+        <h3 id="planets-title">The Eight Planets</h3>
+        <p>
+          Our Solar System has eight recognized planets. The first four are rocky terrestrial planets;
+          Jupiter and Saturn are gas giants, while Uranus and Neptune are ice giants.
+          Select a world to open its guide.
+        </p>
+      </div>
+
+      <div id="planet-grid" class="explore-grid" aria-label="Eight planet explorer"></div>
+
+      <p class="heritage-note">
+        The five names shown below in Amharic are documented traditional planetary names:
+        አጣርድ, ዝሁራ, መሪህ, መሽተሪ, ዙሐል. Uranus and Neptune are shown with modern Amharic transliterations only;
+        this page does not assign traditional names to them.
+      </p>
+    </section>
+
+    <section class="section" aria-labelledby="objects-title">
+      <p class="section-label">02 · NIGHT-SKY OBJECTS</p>
+      <div class="explore-lead">
+        <h3 id="objects-title">Look Beyond the Planets</h3>
+        <p>
+          Ethiopia's latitude gives observers access to a rich mixture of northern and southern sky objects.
+          Start with bright naked-eye landmarks, then use binoculars or a telescope for deeper targets.
+        </p>
+      </div>
+
+      <div id="sky-grid" class="explore-grid sky-grid" aria-label="Night-sky explorer"></div>
+
+      <div class="observe-panel">
+        <p class="section-label">03 · OBSERVING IN ETHIOPIA</p>
+        <h3>Make the Most of a Dark Sky</h3>
+        <p>
+          For beginners, the most important tools are a clear sky, a wide view of the horizon, and less artificial light.
+          Let your eyes adapt to darkness, begin with bright targets, and use a planetarium app or star chart to confirm what you find.
+        </p>
+        <p>
+          Ethiopia also has dedicated astronomy facilities. The Space Science and Geospatial Institute's
+          Entoto Observatory and Research Center offers guided astro-tourism and observing experiences,
+          while its facilities include optical telescopes and sky-monitoring equipment.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- One reusable dialog keeps the page light while every card still opens its own information. -->
+  <dialog id="explore-modal" class="modal" aria-labelledby="modal-title" aria-describedby="modal-summary">
+    <div class="modal-inner">
+      <div class="modal-visual">
+        <img id="modal-image" src="" alt="">
+        <button id="modal-close" class="modal-close" type="button" aria-label="Close information">×</button>
+      </div>
+      <div class="modal-content">
+        <p id="modal-label" class="modal-label"></p>
+        <h3 id="modal-title"></h3>
+        <p id="modal-name" class="modal-name"></p>
+        <p id="modal-summary" class="modal-summary"></p>
+        <div id="modal-facts" class="modal-facts"></div>
+        <div id="modal-observing" class="modal-section"></div>
+        <div id="modal-heritage" class="modal-section"></div>
+        <p id="modal-source" class="modal-source"></p>
+      </div>
+    </div>
+  </dialog>
+
+  <footer>
+    <div class="footer-ornament">─── ✦ ───</div>
+    <h4>ETHIOPIAN SKY</h4>
+    <p>ኢትዮጵያ ሰማይ</p>
+    <small>A science and culture exploration project.</small>
+  </footer>
+
+  <script src="main.js"></script>
+
+  <script>
+    /*
+      Explore data.
+      Traditional names are limited to the five documented names requested for this project.
+      The remaining two outer planets use modern Amharic transliterations rather than invented traditional names.
+    */
+    const planets = [
+      {
+        id: "mercury",
+        order: "01",
+        type: "INNER PLANET",
+        name: "Mercury",
+        amharic: "አጣርድ",
+        image: "mercury.jpg",
+        alt: "Mercury against the blackness of space",
+        summary: "Mercury is the smallest planet in the Solar System and the planet closest to the Sun. It completes one trip around the Sun in about 88 Earth days.",
+        facts: [
+          ["Class", "Rocky / terrestrial"],
+          ["Position", "1st from the Sun"],
+          ["Year", "88 Earth days"],
+          ["Moons", "0"]
+        ],
+        observing: "Mercury is visible to the unaided eye, but it always stays close to the Sun in our sky. Look for it low above the western horizon after sunset or low in the east before sunrise when conditions are favorable.",
+        heritage: "The name አጣርድ (At'ard) is one of the five documented Amharic planetary names retained in the Ethiopian tradition.",
+        source: "Science: NASA Solar System / JPL planetary data. Name tradition: published Ethiopian planetary-nomenclature research and Ge'ez manuscript evidence."
+      },
+      {
+        id: "venus",
+        order: "02",
+        type: "INNER PLANET",
+        name: "Venus",
+        amharic: "ዝሁራ",
+        image: "venus.jpg",
+        alt: "Venus with its pale cloud-covered appearance",
+        summary: "Venus is the second planet from the Sun and the hottest planet in the Solar System because its thick atmosphere traps heat very efficiently.",
+        facts: [
+          ["Class", "Rocky / terrestrial"],
+          ["Position", "2nd from the Sun"],
+          ["Year", "225 Earth days"],
+          ["Moons", "0"]
+        ],
+        observing: "Venus is usually the easiest planet to recognize by brightness. It appears as a bright evening object after sunset or as a bright morning object before sunrise.",
+        heritage: "The name ዝሁራ (Zihura / Zəhrā) is one of the five documented Amharic planetary names retained in the Ethiopian tradition.",
+        source: "Science: NASA Solar System / Venus facts. Name tradition: published Ethiopian planetary-nomenclature research and Ethiopic textual evidence."
+      },
+      {
+        id: "earth",
+        order: "03",
+        type: "INNER PLANET",
+        name: "Earth",
+        amharic: "ምድር",
+        image: "earth.jpg",
+        alt: "Earth viewed from space",
+        summary: "Earth is the third planet from the Sun and the planet we call home. It has liquid water on its surface and is the only world currently known to support life.",
+        facts: [
+          ["Class", "Rocky / terrestrial"],
+          ["Position", "3rd from the Sun"],
+          ["Year", "365.25 days"],
+          ["Moon", "1"]
+        ],
+        observing: "Every observing session begins on Earth. Your local latitude, direction, time, horizon, and sky conditions determine which celestial objects you can see and how high they rise.",
+        heritage: "ምድር is the ordinary Amharic word for Earth, land, or ground; unlike the five historical planet names above, this is not presented here as one of the five traditional planetary names.",
+        source: "Science: NASA Earth facts and Solar System resources. Amharic usage: established Amharic vocabulary."
+      },
+      {
+        id: "mars",
+        order: "04",
+        type: "INNER PLANET",
+        name: "Mars",
+        amharic: "መሪህ",
+        image: "mars.jpg",
+        alt: "Mars with its reddish surface",
+        summary: "Mars is the fourth planet from the Sun. Its familiar reddish color is associated with iron minerals in its surface material.",
+        facts: [
+          ["Class", "Rocky / terrestrial"],
+          ["Position", "4th from the Sun"],
+          ["Year", "687 Earth days"],
+          ["Moons", "2"]
+        ],
+        observing: "Mars can stand out because of its reddish appearance. Its visibility changes as Earth and Mars move around the Sun on different orbits.",
+        heritage: "The name መሪህ (Merih / Mariḵ) is one of the five documented Amharic planetary names retained in the Ethiopian tradition.",
+        source: "Science: NASA Mars facts. Name tradition: published Ethiopian planetary-nomenclature research and Ethiopic textual evidence."
+      },
+      {
+        id: "jupiter",
+        order: "05",
+        type: "OUTER PLANET",
+        name: "Jupiter",
+        amharic: "መሽተሪ",
+        image: "jupiter.jpg",
+        alt: "Jupiter showing bands in its atmosphere",
+        summary: "Jupiter is the largest planet in the Solar System. It is a gas giant with powerful atmospheric storms and a large family of moons.",
+        facts: [
+          ["Class", "Gas giant"],
+          ["Position", "5th from the Sun"],
+          ["Year", "11.86 Earth years"],
+          ["Quick clue", "Very bright"]
+        ],
+        observing: "Jupiter is one of the easiest planets to spot without a telescope when it is above the horizon. Binoculars or a small telescope can reveal its four large Galilean moons as tiny points of light.",
+        heritage: "The name መሽተሪ (Meshtiri / Maštari) is one of the five documented Amharic planetary names retained in the Ethiopian tradition.",
+        source: "Science: NASA Jupiter facts and JPL planetary data. Name tradition: published Ethiopian planetary-nomenclature research and Ethiopic textual evidence."
+      },
+      {
+        id: "saturn",
+        order: "06",
+        type: "OUTER PLANET",
+        name: "Saturn",
+        amharic: "ዙሐል",
+        image: "saturn.jpg",
+        alt: "Saturn and its ring system",
+        summary: "Saturn is the sixth planet from the Sun and a gas giant surrounded by a broad ring system made of countless pieces of ice and rock.",
+        facts: [
+          ["Class", "Gas giant"],
+          ["Position", "6th from the Sun"],
+          ["Year", "29.45 Earth years"],
+          ["Quick clue", "Bright and steady"]
+        ],
+        observing: "Saturn is visible to the unaided eye when it is well placed in the night sky. A small telescope turns it into a far more dramatic sight by showing its rings.",
+        heritage: "The name ዙሐል (Zuhal / Zuḥal) is one of the five documented Amharic planetary names retained in the Ethiopian tradition.",
+        source: "Science: NASA Saturn facts and JPL planetary data. Name tradition: published Ethiopian planetary-nomenclature research and Ethiopic textual evidence."
+      },
+      {
+        id: "uranus",
+        order: "07",
+        type: "ICE GIANT",
+        name: "Uranus",
+        amharic: "ዩራነስ",
+        image: "uranus.jpg",
+        alt: "Uranus as seen by a spacecraft",
+        summary: "Uranus is the seventh planet from the Sun and an ice giant. Its rotation axis is tilted dramatically compared with most planets.",
+        facts: [
+          ["Class", "Ice giant"],
+          ["Position", "7th from the Sun"],
+          ["Year", "84 Earth years"],
+          ["Unaided eye", "Not a practical naked-eye target"]
+        ],
+        observing: "Uranus is far dimmer than the five classic naked-eye planets. A telescope and a reliable sky chart are the practical way to locate it.",
+        heritage: "ዩራነስ is a modern Amharic transliteration used here only for the planet's current international name. No traditional Ethiopian planetary name is assigned on this page.",
+        source: "Science: NASA Uranus facts and JPL planetary data. Amharic spelling: modern transliteration."
+      },
+      {
+        id: "neptune",
+        order: "08",
+        type: "ICE GIANT",
+        name: "Neptune",
+        amharic: "ኔፕቱን",
+        image: "neptune.jpg",
+        alt: "Neptune appearing blue against space",
+        summary: "Neptune is the eighth and most distant recognized planet from the Sun. It is a cold ice giant with a dynamic atmosphere and very fast winds.",
+        facts: [
+          ["Class", "Ice giant"],
+          ["Position", "8th from the Sun"],
+          ["Year", "164.8 Earth years"],
+          ["Unaided eye", "No"]
+        ],
+        observing: "Neptune requires optical aid. For a real observing session, use a planetarium app or star chart to locate its position, then confirm the target with a telescope.",
+        heritage: "ኔፕቱን is a modern Amharic transliteration used here only for the planet's current international name. No traditional Ethiopian planetary name is assigned on this page.",
+        source: "Science: NASA Neptune facts and JPL planetary data. Amharic spelling: modern transliteration."
+      }
+    ];
+
+    const skyObjects = [
+      {
+        id: "sirius",
+        type: "NAKED EYE · STAR",
+        name: "Sirius",
+        amharic: "ሲሪየስ",
+        image: "sirius.jpg",
+        alt: "Southern sky containing Sirius and the Milky Way",
+        summary: "Sirius is the brightest star in Earth's night sky. Its brightness makes it a useful landmark for beginners learning to orient themselves in the night sky.",
+        facts: [["Type", "Binary star system"],["Visibility", "Naked eye"],["Use", "Bright reference star"],["Sky region", "Southern sky"]],
+        observing: "From Ethiopia, Sirius is a strong southern-sky marker. When Orion is prominent, scan the southern part of the sky for the brightest star in that region.",
+        heritage: "This card presents Sirius as an astronomy target, not as a claim about a traditional Ethiopian name.",
+        source: "Science: standard stellar and skywatching references."
+      },
+      {
+        id: "pleiades",
+        type: "NAKED EYE · CLUSTER",
+        name: "Pleiades",
+        amharic: "ፕሌያዲስ",
+        image: "pleiades.jpg",
+        alt: "The Pleiades star cluster",
+        summary: "The Pleiades is a nearby open star cluster. Several bright members can be seen without optical aid, while binoculars reveal many more.",
+        facts: [["Type", "Open star cluster"],["Catalog", "M45"],["Best tool", "Eyes or binoculars"],["Visual clue", "Compact group of bright stars"]],
+        observing: "Look for a small, tight knot of stars rather than a large constellation pattern. In darker Ethiopian locations the cluster is especially easy to appreciate without a telescope.",
+        heritage: "Star clusters such as the Pleiades have long been important in skywatching traditions around the world; this page keeps the object description separate from specific historical naming claims.",
+        source: "Science: standard astronomical catalogs and skywatching resources."
+      },
+      {
+        id: "orion-nebula",
+        type: "DEEP SKY · NEBULA",
+        name: "Orion Nebula",
+        amharic: "ኦሪዮን ኔቡላ",
+        image: "orion nebula.jpg",
+        alt: "The Orion Nebula glowing in space",
+        summary: "The Orion Nebula, also catalogued as M42, is a large region of gas and dust where stars are forming. It is one of the easiest bright nebulae for beginners.",
+        facts: [["Type", "Emission nebula"],["Catalog", "M42"],["Best tool", "Binoculars / small telescope"],["Location", "Orion"]],
+        observing: "Find Orion first, then look toward the sword below the three-star belt. From a dark site the nebula can appear as a soft patch even before optical aid is used.",
+        heritage: "This is a modern deep-sky observing target; the page does not attach an unsupported Ethiopian discovery or naming claim to it.",
+        source: "Science: NASA resources on nebulae and star formation."
+      },
+      {
+        id: "omega-centauri",
+        type: "DEEP SKY · CLUSTER",
+        name: "Omega Centauri",
+        amharic: "ኦሜጋ ሴንታዩሪ",
+        image: "omega centauri.jpg",
+        alt: "Omega Centauri globular cluster",
+        summary: "Omega Centauri (NGC 5139) is a huge globular cluster containing millions of stars. It is one of the famous deep-sky showpieces of the southern sky.",
+        facts: [["Type", "Globular cluster"],["Catalog", "NGC 5139"],["Dark-sky view", "Possible to detect with the unaided eye"],["Sky region", "Southern sky"]],
+        observing: "Ethiopia's northern-tropical latitude still gives observers access to a substantial southern sky. A clear southern horizon and dark conditions make Omega Centauri a rewarding target; binoculars or a small telescope reveal much more structure.",
+        heritage: "This card focuses on what can be observed from Ethiopia rather than assigning a traditional Ethiopian name that has not been established here.",
+        source: "Science: ESO and standard deep-sky references."
+      },
+      {
+        id: "milky-way",
+        type: "NAKED EYE · GALAXY",
+        name: "Milky Way",
+        amharic: "ሚልኪ ዌይ",
+        image: "milky way.jpg",
+        alt: "The Milky Way stretching across a dark night sky",
+        summary: "We live inside the Milky Way, so the galaxy appears as a broad band of combined starlight, dust, and dark lanes crossing the night sky.",
+        facts: [["Type", "Barred spiral galaxy"],["View", "Observed from within"],["Best tool", "Unaided eye under dark skies"],["Main challenge", "Light pollution"]],
+        observing: "Move away from bright city lighting and let your eyes adapt. On a clear, dark night, the Milky Way can become one of the largest and most obvious structures in the sky.",
+        heritage: "The Milky Way is included here as an observing target. Deeper Ethiopian cultural interpretations belong in the Heritage and Sky AI sections where sources can be examined in context.",
+        source: "Science: NASA skywatching resources."
+      },
+      {
+        id: "crux",
+        type: "NAKED EYE · CONSTELLATION",
+        name: "Crux (Southern Cross)",
+        amharic: "ክሩክስ",
+        image: "crux.jpg",
+        alt: "The Southern Cross in the southern Milky Way",
+        summary: "Crux is a compact southern constellation recognizable by its bright cross-shaped pattern. Its southern location makes it an interesting target from Ethiopia.",
+        facts: [["Type", "Constellation"],["Visibility", "Naked eye"],["Key clue", "Cross-shaped pattern"],["Sky region", "Southern horizon"]],
+        observing: "Crux appears low in the southern sky from Ethiopia. How high it rises depends on the observer's latitude, season, and time, so an unobstructed southern horizon is helpful.",
+        heritage: "This page deliberately keeps the object identification separate from historical claims about Ethiopian discovery or naming.",
+        source: "Science: IAU constellation data and standard sky charts."
+      }
+    ];
+
+    const planetGrid = document.getElementById("planet-grid");
+    const skyGrid = document.getElementById("sky-grid");
+
+    function createCard(item, isPlanet) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "explore-card feature-card";
+      button.setAttribute("data-id", item.id);
+      button.setAttribute("data-group", isPlanet ? "planet" : "sky");
+      button.setAttribute("aria-haspopup", "dialog");
+
+      const meta = isPlanet ? `${item.order} · ${item.type}` : item.type;
+      const name = item.amharic ? `<span class="explore-card-name">${item.amharic}</span>` : "";
+
+      button.innerHTML = `
+        <img src="${item.image}" alt="${item.alt}" loading="lazy">
+        <span class="explore-card-body">
+          <span class="explore-card-meta">${meta}</span>
+          <h4>${item.name}</h4>
+          ${name}
+          <span class="explore-card-desc">${item.summary}</span>
+          <span class="explore-card-cta">Open guide →</span>
+        </span>
+      `;
+
+      button.addEventListener("click", () => openModal(item));
+      return button;
+    }
+
+    planets.forEach((planet) => planetGrid.appendChild(createCard(planet, true)));
+    skyObjects.forEach((object) => skyGrid.appendChild(createCard(object, false)));
+
+    const modal = document.getElementById("explore-modal");
+    const modalImage = document.getElementById("modal-image");
+    const modalLabel = document.getElementById("modal-label");
+    const modalTitle = document.getElementById("modal-title");
+    const modalName = document.getElementById("modal-name");
+    const modalSummary = document.getElementById("modal-summary");
+    const modalFacts = document.getElementById("modal-facts");
+    const modalObserving = document.getElementById("modal-observing");
+    const modalHeritage = document.getElementById("modal-heritage");
+    const modalSource = document.getElementById("modal-source");
+    const closeButton = document.getElementById("modal-close");
+
+    function fillFacts(facts) {
+      modalFacts.innerHTML = facts.map(([label, value]) => `
+        <div class="modal-fact">
+          <strong>${label}</strong>
+          <span>${value}</span>
+        </div>
+      `).join("");
+    }
+
+    function openModal(item) {
+      modalImage.src = item.image;
+      modalImage.alt = item.alt;
+      modalLabel.textContent = item.type;
+      modalTitle.textContent = item.name;
+      modalName.textContent = item.amharic || "";
+      modalSummary.textContent = item.summary;
+      fillFacts(item.facts);
+      modalObserving.innerHTML = `<h4>${item.type.includes("NAKED EYE") ? "Observe It" : "Observe It from Ethiopia"}</h4><p>${item.observing}</p>`;
+      modalHeritage.innerHTML = `<h4>Ethiopian Context</h4><p>${item.heritage}</p>`;
+      modalSource.textContent = item.source;
+
+      if (typeof modal.showModal === "function") {
+        modal.showModal();
+      } else {
+        modal.setAttribute("open", "");
+      }
+
+      document.body.dataset.modalOpen = "true";
+      requestAnimationFrame(() => closeButton.focus());
+    }
+
+    function closeModal() {
+      if (typeof modal.close === "function" && modal.open) {
+        modal.close();
+      } else {
+        modal.removeAttribute("open");
+      }
+      document.body.removeAttribute("data-modalOpen");
+    }
+
+    closeButton.addEventListener("click", closeModal);
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal();
+    });
+
+    modal.addEventListener("close", () => {
+      document.body.removeAttribute("data-modalOpen");
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && modal.open) closeModal();
+    });
+  </script>
+
+</body>
+</html>

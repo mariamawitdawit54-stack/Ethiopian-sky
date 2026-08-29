@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sky AI — an evidence-first astronomy assistant for Ethiopian Sky.">
+  <title>Sky AI – Ethiopian Sky</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .ai-intro{max-width:760px;margin:0 auto;text-align:center}
+    .ai-shell{max-width:980px;margin:2.2rem auto 0}
+    .ai-chat{overflow:hidden;border:1px solid rgba(212,168,76,.48);background:rgba(0,0,0,.14);box-shadow:0 18px 45px rgba(0,0,0,.22)}
+    .ai-chat-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.15rem;border-bottom:1px solid rgba(212,168,76,.28)}
+    .ai-chat-brand{display:flex;align-items:center;gap:.75rem}.ai-orbit{display:grid;place-items:center;width:2.55rem;height:2.55rem;flex:0 0 auto;border:1px solid rgba(212,168,76,.68);border-radius:50%}
+    .ai-chat-title{margin:0;font-size:1rem}.ai-chat-subtitle{margin:.18rem 0 0;font-size:.76rem;opacity:.68}
+    .ai-status{display:inline-flex;align-items:center;gap:.45rem;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;opacity:.75}.ai-status-dot{width:.48rem;height:.48rem;border-radius:50%;background:currentColor}
+    .chat-log{min-height:390px;max-height:560px;overflow-y:auto;padding:1.15rem;scroll-behavior:smooth}
+    .chat-message{display:flex;margin:0 0 1rem}.chat-message.user{justify-content:flex-end}.chat-bubble{width:min(78%,680px);padding:.85rem 1rem;border:1px solid rgba(212,168,76,.24);line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+    .chat-message.ai .chat-bubble{background:rgba(212,168,76,.055)}.chat-message.user .chat-bubble{background:rgba(255,255,255,.045)}
+    .chat-speaker{display:block;margin-bottom:.35rem;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;opacity:.62}
+    .typing .chat-bubble{opacity:.75}.typing-dots span{display:inline-block;animation:ai-dot 1.1s infinite ease-in-out}.typing-dots span:nth-child(2){animation-delay:.15s}.typing-dots span:nth-child(3){animation-delay:.3s}
+    @keyframes ai-dot{0%,60%,100%{transform:translateY(0);opacity:.45}30%{transform:translateY(-3px);opacity:1}}
+    .suggestions{padding:0 1.15rem 1.15rem}.suggestions-label{margin:0 0 .65rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.68}
+    .suggestion-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}.suggestion-btn{min-height:48px;padding:.7rem .8rem;border:1px solid rgba(212,168,76,.32);background:transparent;color:inherit;text-align:left;cursor:pointer;line-height:1.45}
+    .suggestion-btn:hover,.suggestion-btn:focus-visible{border-color:rgba(212,168,76,.82);outline:none}
+    .ai-composer{display:grid;grid-template-columns:1fr auto;gap:.65rem;padding:1rem 1.15rem 1.15rem;border-top:1px solid rgba(212,168,76,.28)}
+    .ai-input{width:100%;min-height:52px;resize:vertical;padding:.85rem .95rem;border:1px solid rgba(212,168,76,.42);background:rgba(0,0,0,.16);color:inherit;font:inherit}
+    .ai-input::placeholder{color:inherit;opacity:.55}.ai-input:focus{border-color:rgba(212,168,76,.9);outline:none}
+    .ai-send{align-self:stretch;min-width:110px;padding:.8rem 1rem;border:1px solid rgba(212,168,76,.72);background:rgba(212,168,76,.12);color:inherit;font:inherit;cursor:pointer}.ai-send:hover,.ai-send:focus-visible{background:rgba(212,168,76,.2);outline:none}.ai-send:disabled{cursor:not-allowed;opacity:.5}
+    .ai-note{max-width:820px;margin:1.6rem auto 0;text-align:center;font-size:.78rem;line-height:1.65;opacity:.68}
+    .ai-features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem}.ai-feature{height:100%}.ai-feature p{margin-bottom:0;line-height:1.7}
+    @media(max-width:800px){.ai-features,.suggestion-grid{grid-template-columns:1fr}}
+    @media(max-width:620px){.ai-chat-head{align-items:flex-start}.ai-status{display:none}.chat-log{min-height:330px}.chat-bubble{width:88%}.ai-composer{grid-template-columns:1fr}.ai-send{min-height:48px}}
+    @media(prefers-reduced-motion:reduce){.chat-log{scroll-behavior:auto}.typing-dots span{animation:none}}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <div class="brand-symbol">✦</div>
+      <div><h1>ETHIOPIAN SKY</h1><p>ኢትዮጵያ ሰማይ</p></div>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="explore.html">Explore</a>
+      <a href="heritage.html">Heritage</a>
+      <a href="evidence.html">Evidence</a>
+      <a href="ai.html" class="active">Sky AI</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">እውቀት ፤ ሰማይ ፤ ጥያቄ</p>
+        <h2>ASK <span>SKY AI</span></h2>
+        <p class="hero-geez">ስለ ሰማይ ጠይቁ። እንወቅ ፣ እንመርምር።</p>
+        <p class="hero-description">An astronomy assistant built for Ethiopian Sky. Ask about planets, stars, observing, or Ethiopia's astronomical heritage — in English or Amharic.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="ai-title">
+      <div class="ai-intro">
+        <p class="section-label">01 · SKY AI ASSISTANT</p>
+        <h3 id="ai-title">Explore With a Question</h3>
+        <p>Sky AI is designed to give clear, evidence-aware astronomy answers. It distinguishes established science and documented history from claims that remain uncertain.</p>
+      </div>
+
+      <div class="ai-shell">
+        <div class="ai-chat">
+          <div class="ai-chat-head">
+            <div class="ai-chat-brand">
+              <div class="ai-orbit" aria-hidden="true">✦</div>
+              <div><h4 class="ai-chat-title">Sky AI</h4><p class="ai-chat-subtitle">Astronomy · Ethiopian Sky · Evidence-first</p></div>
+            </div>
+            <div class="ai-status" aria-label="Gemini connected"><span class="ai-status-dot" aria-hidden="true"></span>Gemini connected</div>
+          </div>
+
+          <div id="chat-log" class="chat-log" role="log" aria-live="polite" aria-relevant="additions" aria-label="Sky AI conversation">
+            <div class="chat-message ai"><div class="chat-bubble"><span class="chat-speaker">Sky AI</span>Welcome to Sky AI. Ask me about astronomy, the planets, observing the night sky, or documented Ethiopian astronomical heritage.</div></div>
+          </div>
+
+          <div class="suggestions" aria-labelledby="suggestions-title">
+            <p id="suggestions-title" class="suggestions-label">Try asking</p>
+            <div class="suggestion-grid">
+              <button class="suggestion-btn" type="button" data-question="What are the five documented traditional Ethiopian planetary names?">What are the five documented traditional Ethiopian planetary names?</button>
+              <button class="suggestion-btn" type="button" data-question="Which planets can I see without a telescope?">Which planets can I see without a telescope?</button>
+              <button class="suggestion-btn" type="button" data-question="What do we know about the Borana astronomical calendar?">What do we know about the Borana astronomical calendar?</button>
+              <button class="suggestion-btn" type="button" data-question="What evidence exists for Ethiopian astronomical traditions?">What evidence exists for Ethiopian astronomical traditions?</button>
+            </div>
+          </div>
+
+          <form id="ai-form" class="ai-composer">
+            <label class="sr-only" for="ai-input">Ask Sky AI a question</label>
+            <textarea id="ai-input" class="ai-input" rows="1" placeholder="Ask Sky AI..." autocomplete="off" spellcheck="true" maxlength="1000"></textarea>
+            <button id="ai-send" class="ai-send" type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="ai-principles">
+      <p class="section-label">02 · WHAT GUIDES SKY AI</p>
+      <h3 id="ai-principles">A Different Kind of Astronomy Assistant</h3>
+      <div class="ai-features">
+        <article class="feature-card ai-feature"><div class="card-symbol">✦</div><h4>Evidence First</h4><p>Sky AI should distinguish scientific facts, documented historical traditions, and claims for which evidence is still limited.</p></article>
+        <article class="feature-card ai-feature"><div class="card-symbol">✦</div><h4>Ethiopian Context</h4><p>Answers can connect astronomy with Ethiopian observing conditions, sky heritage, traditional planetary names, and modern Ethiopian space science.</p></article>
+        <article class="feature-card ai-feature"><div class="card-symbol">✦</div><h4>English + Amharic</h4><p>The interface is prepared for questions in both English and Amharic, with the assistant responding in the language used by the visitor.</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="section-label">03 · CONNECT THE STORY</p>
+      <h3>From Question to Evidence</h3>
+      <p style="max-width:760px;">Sky AI is not a replacement for the Evidence Lab. It is the place to ask broader questions and explore ideas, while Evidence Lab shows the sources and verdicts behind selected historical and scientific claims.</p>
+      <p><a href="explore.html">Explore the sky →</a> &nbsp;&nbsp; <a href="evidence.html">Check the evidence →</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-ornament">─── ✦ ───</div>
+    <h4>ETHIOPIAN SKY</h4>
+    <p>ኢትዮጵያ ሰማይ</p>
+    <small>A science and culture exploration project.</small>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    (function(){
+      "use strict";
+
+      const form = document.getElementById("ai-form");
+      const input = document.getElementById("ai-input");
+      const sendButton = document.getElementById("ai-send");
+      const chatLog = document.getElementById("chat-log");
+      const suggestions = document.querySelectorAll("[data-question]");
+
+      function addMessage(role, text){
+        const message = document.createElement("div");
+        message.className = "chat-message " + role;
+
+        const bubble = document.createElement("div");
+        bubble.className = "chat-bubble";
+
+        const speaker = document.createElement("span");
+        speaker.className = "chat-speaker";
+        speaker.textContent = role === "user" ? "You" : "Sky AI";
+
+        const body = document.createElement("span");
+        body.textContent = text;
+
+        bubble.appendChild(speaker);
+        bubble.appendChild(body);
+        message.appendChild(bubble);
+        chatLog.appendChild(message);
+        chatLog.scrollTop = chatLog.scrollHeight;
+      }
+
+      function addTyping(){
+        const message = document.createElement("div");
+        message.id = "typing-message";
+        message.className = "chat-message ai typing";
+
+        const bubble = document.createElement("div");
+        bubble.className = "chat-bubble";
+
+        const speaker = document.createElement("span");
+        speaker.className = "chat-speaker";
+        speaker.textContent = "Sky AI";
+
+        const dots = document.createElement("span");
+        dots.className = "typing-dots";
+        dots.innerHTML = "<span>•</span> <span>•</span> <span>•</span>";
+
+        bubble.appendChild(speaker);
+        bubble.appendChild(dots);
+        message.appendChild(bubble);
+        chatLog.appendChild(message);
+        chatLog.scrollTop = chatLog.scrollHeight;
+      }
+
+      function removeTyping(){
+        const item = document.getElementById("typing-message");
+        if (item) item.remove();
+      }
+
+      function resizeInput(){
+        input.style.height = "auto";
+        input.style.height = Math.min(input.scrollHeight, 180) + "px";
+      }
+
+      async function handleQuestion(question){
+        const clean = question.trim();
+
+        if (!clean || sendButton.disabled) return;
+
+        addMessage("user", clean);
+        input.value = "";
+        resizeInput();
+
+        sendButton.disabled = true;
+        input.disabled = true;
+        addTyping();
+
+        try {
+          const response = await fetch("http://localhost:3000/api/chat", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              message: clean
+            })
+          });
+
+          const data = await response.json();
+
+          removeTyping();
+
+          if (!response.ok) {
+            throw new Error(data.error || "The Sky AI server returned an error.");
+          }
+
+          if (!data.reply) {
+            throw new Error("Sky AI returned an empty response.");
+          }
+
+          addMessage("ai", data.reply);
+
+        } catch (error) {
+          console.error("Sky AI connection error:", error);
+          removeTyping();
+
+          addMessage(
+            "ai",
+            "I couldn't connect to Sky AI right now. Please make sure the local Sky AI server is running, then try again."
+          );
+
+        } finally {
+          sendButton.disabled = false;
+          input.disabled = false;
+          input.focus();
+          resizeInput();
+        }
+      }
+
+      form.addEventListener("submit", function(event){
+        event.preventDefault();
+        handleQuestion(input.value);
+      });
+
+      suggestions.forEach(function(button){
+        button.addEventListener("click", function(){
+          handleQuestion(button.dataset.question);
+        });
+      });
+
+      input.addEventListener("input", resizeInput);
+
+      input.addEventListener("keydown", function(event){
+        if (event.key === "Enter" && !event.shiftKey) {
+          event.preventDefault();
+          form.requestSubmit();
+        }
+      });
+
+      resizeInput();
+    })();
+  </script>
+</body>
+</html>
